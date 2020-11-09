@@ -13,7 +13,9 @@ namespace Example
             di.Init();
 
             var testWriter = di.GetService<TestWriter>();
+            var testWriterFromType = di.GetService(typeof(TestWriter)) as TestWriter;
             testWriter.PrintHelloWorld();
+            testWriterFromType.PrintHelloWorld();
         }
     }
 }

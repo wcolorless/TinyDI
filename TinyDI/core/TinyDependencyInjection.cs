@@ -47,6 +47,22 @@ namespace TinyDI
             return obj;
         }
 
+        public object GetService(Type serviceType)
+        {
+            IDependency dependency;
+            if (serviceType.IsInterface)
+            {
+                dependency = dependencies.Find(x => x.Interface == serviceType);
+            }
+            else
+            {
+                dependency = dependencies.Find(x => x.Implementation == serviceType);
+            }
+            if (dependency == null) throw new CantFindThisDependency(serviceType.FullName);
+            var obj = CreateObj.Go(dependencies, dependency.Implementation);
+            return obj;
+        }
+
 
         private object InvokeMethod(Type impType, Type cType, object command)
         {
